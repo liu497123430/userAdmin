@@ -45,22 +45,17 @@
         </el-menu>
       </el-aside>
       <el-container>
-        <el-header>
-          <div class="adminName">
-            <span>admin</span>
-            <div class="el-icon-setting"></div>
-          </div>
-        </el-header>
+        <el-header>Header</el-header>
         <el-main>
           <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-            <el-breadcrumb-item>{{ $route.name }}</el-breadcrumb-item>
+            <el-breadcrumb-item>{{$route.name}}</el-breadcrumb-item>
           </el-breadcrumb>
 
           <!-- 二级路由出口 -->
-          <div class="login_bottom">
+         <div class="login_bottom">
             <router-view></router-view>
-          </div>
+         </div>
         </el-main>
       </el-container>
     </el-container>
@@ -97,11 +92,7 @@ export default {
   color: #333;
 }
 
-.login_bottom {
+.login_bottom{
   margin-top: 20px;
-}
-.adminName {
-  float: right;
-  margin-right: 20px;
 }
 </style>

@@ -159,7 +159,14 @@ export const reqUserCount=()=>{
     })
 }
 
-
+// 管理员登录
+export const reqUserLogin=(data)=>{
+    return  axios({
+        url:baseUrl+'/api/userlogin',
+        method:'post',
+        data:data
+    })
+}
 
 
 
@@ -270,3 +277,63 @@ export const reqSpecAdd=(form)=>{
         })
     }
     
+
+
+
+
+    
+////////////////////////商品管理///////////////////////////////////////
+// 商品管理添加
+export const reqGoodsAdd=(form)=>{ 
+    var data = new FormData();
+    for(var i in form){
+        data.append(i,form[i])
+    }
+
+    return  axios({
+        url:baseUrl+'/api/goodsadd',
+        method:'post',
+        data:data
+    })
+}
+// 商品管理列表
+export const reqGoodsList=(params)=>{
+    return  axios({
+        url:baseUrl+'/api/goodslist',
+        method:'get',
+        params:params
+    })
+}
+
+// 商品管理删除
+export const reqGoodsDel=(id)=>{
+    return  axios({
+        url:baseUrl+'/api/goodsdelete',
+        method:'post',
+        data:id
+    })
+}
+
+// 商品管理获取一条数据
+export const reqGoodsOne=(params)=>{
+    return  axios({
+        url:baseUrl+'/api/goodsinfo',
+        method:'get',
+        params:params
+    })
+}
+
+
+
+// 商品管理修改
+export const reqGoodsEdit=(form)=>{
+    var data = new FormData();
+    for(var i in form){
+        data.append(i,form[i])
+    }
+    return  axios({
+        url:baseUrl+'/api/goodsedit',
+        method:'post',
+        data:data
+    })
+}

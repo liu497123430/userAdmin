@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '../store/index.js'
 
 Vue.use(Router)
 // 懒加载模式
@@ -25,7 +26,14 @@ export const indexRouters = [
   {
     path: 'role',
     component: role,
-    name:'角色管理'
+    name:'角色管理',
+    // beforeEnter: (to, from, next) => {
+    //   if(from.path=='/index'){
+    //         next()
+    //   }else{
+    //     next('/login')
+    //   }
+    // } 
   },
   {
     path: 'manger',
@@ -65,11 +73,11 @@ export const indexRouters = [
 ]
 
 
-export default new Router({
+const router= new Router({
   routes: [
     {
       path: '/',
-      component: login
+      redirect: 'login'
     },
     {
       path: '/login',
@@ -92,3 +100,23 @@ export default new Router({
     },
   ]
 })
+
+// 全局守卫
+// router.beforeEach((to,from,next)=>{
+//   console.log(store); 
+//   // 直接去登录的
+//   if(to.path=='/login'){
+//       next()
+//       return
+//   }
+
+//   // 不是去登录，需要先判断是否登录过，如果登录直接进入，否则需要跳转到登录页面
+//    if(store.state.user.list.menus){
+//      next()
+//    }else{
+//      this.$route.push('/login')
+//    }
+// })
+
+
+export default router

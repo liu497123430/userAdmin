@@ -1,6 +1,6 @@
 
 
-import {reqClassifyList} from '../../util/request'
+import {reqGoodsList} from '../../util/request'
 
 // 初始数据
 const state={
@@ -14,8 +14,8 @@ const mutations={
 }
 // 异步操作数据
 const actions={
-    requsetClassifyList(context){
-        reqClassifyList({istree:true}).then(res=>{
+    requsetGoodsList(context){
+        reqGoodsList({istree:true}).then(res=>{
             context.commit('changeList',res.data.list)
         })        
     }

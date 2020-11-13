@@ -8,16 +8,39 @@
       default-expand-all
       :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
     >
-      <el-table-column prop="id" label="分类编号" sortable width="180">
+      <el-table-column prop="id" label="商品编号" sortable width="100">
       </el-table-column>
-      <el-table-column prop="catename" label="分类名称" sortable width="180">
+           <el-table-column prop="goodsname" label="商品名称" sortable width="100">
       </el-table-column>
-      <el-table-column  label="图片"> 
+       <el-table-column prop="price" label="商品价格" sortable width="100">
+      </el-table-column>
+       <el-table-column prop="market_price" label="市场价格" sortable width="100">
+      </el-table-column>
+ 
+      <el-table-column  label="图片" width="130"> 
         <template slot-scope="scope">
             <img :src='$preImg+scope.row.img' alt="">
         </template>
       </el-table-column>
-      <el-table-column prop="status" label="状态">
+      <el-table-column prop="status" label="是否新品" width="100">
+        <!-- 作用域插槽 用来获取数据-->
+        <template slot-scope="scope">
+          <div>
+               <el-button type='primary' v-if="scope.row.isnew==1">是</el-button>
+               <el-button type='info' v-else disabled>否</el-button>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column prop="status" label="是否热卖" width="100">
+        <!-- 作用域插槽 用来获取数据-->
+        <template slot-scope="scope">
+          <div>
+               <el-button type='primary' v-if="scope.row.ishot==1">是</el-button>
+               <el-button type='info' v-else disabled>否</el-button>
+          </div>
+        </template>
+      </el-table-column>
+       <el-table-column prop="status" label="状态" width="100">
         <!-- 作用域插槽 用来获取数据-->
         <template slot-scope="scope">
           <div>
@@ -26,8 +49,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="address" label="操作">
-
+      <el-table-column prop="address" label="操作" width="180">
 
          <template slot-scope="scope">
           <div>
@@ -43,13 +65,13 @@
 <script>
 //解构store中的数据
 import {mapActions,mapGetters} from 'vuex'
-import {reqClassifyDel} from '../../../util/request'
+import {reqGoodsDel} from '../../../util/request'
 // 导入弹框
 import {alertSuccess,alertwarning}  from '../../../util/alert'
 export default {
   computed: {
     ...mapGetters({
-      list:'classify/list'
+      list:'goods/list'
     })
   },
   components: {},
@@ -60,7 +82,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      requsetClassifyList:'classify/requsetClassifyList'
+      requsetGoodsList:'goods/requsetGoodsList'
     }),
     // 删除
     del(id){
@@ -71,12 +93,16 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          reqClassifyDel({id:id}).then(res=>{
-            this.requsetClassifyList()
+          reqGoodsDel({id:id}).then(res=>{
+            this.requsetGoodsList()
             alertSuccess(res.data.msg)
         })
          
         })
+
+
+
+
         
     },
     // 更新
@@ -85,7 +111,7 @@ export default {
     }
   },
   mounted() {
-    this.requsetClassifyList()
+    this.requsetGoodsList()
   },
 };
 </script>
