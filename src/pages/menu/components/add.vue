@@ -9,6 +9,7 @@
           <el-select v-model="form.pid" placeholder="请选择活动区域">
             <el-option label="顶级菜单" :value="0"></el-option>
             <!-- 循环添加的数据 -->
+            <el-option v-for="item in list" :key="item.id" :label="item.title" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
 
@@ -57,10 +58,14 @@
 <script>
 import {indexRouters} from '../../../router/index'
 
-
 import {reqMunuAdd,reqMenuOne,reqMenuEdit} from '../../../util/request'
 import {mapActions,mapGetters} from 'vuex'
 export default {
+  computed: {
+    ...mapGetters({
+      list:'menu/list'
+    })
+  },
     props:['info'],
   components: {},
   data() {
@@ -83,12 +88,23 @@ export default {
         hide(){
             this.info.isShow = false
         },
+    // 重置数据
+    empty(){
+          this.form.pid=0,
+           this.form.title='',
+           this.form.icon='',
+           this.form.type=1,
+           this.form.url='',
+          this.form. status=1
+    },
+
     //   添加数据到数据库
         add(){
             reqMunuAdd(this.form).then(res=>{
                 this.hide()
                 this.reqMenuList()
-              
+                // 数据重置
+                this.empty()
             })
         },
         ...mapActions({
@@ -106,6 +122,8 @@ export default {
           reqMenuEdit(this.form).then(res=>{
                 this.hide()
                 this.reqMenuList()
+                // 重置数据
+                this.empty()
           })
         }
 

@@ -2,18 +2,14 @@
   <div>
     <el-dialog :title="info.title" :visible.sync="info.isShow">
       <el-form :model="form">
-        <el-form-item label="所属角色" :label-width="width">
-          <el-select v-model="form.pid" placeholder="请选择">
-            <el-option label="请选择" :value="0" disabled></el-option>
-            <!-- 循环添加的数据 -->
-            <el-option
-              v-for="item in list"
-              :key="item.id"
-              :label="item.rolename"
-              :value="item.id"
-            ></el-option>
-          </el-select>
-        </el-form-item>
+   
+         <el-form-item label="所属角色" :label-width="width">
+                    <el-select v-model="form.roleid" >
+                        <el-option value="" label="--请选择--" disabled></el-option>
+                        <el-option v-for="item in list" :key="item.id" :label="item.rolename" :value="item.id"></el-option>
+                       
+                    </el-select>
+                </el-form-item>
         <el-form-item label="用户名" :label-width="width">
           <el-input v-model="form.username" autocomplete="off"></el-input>
         </el-form-item>
@@ -41,7 +37,6 @@
     </el-dialog>
   </div>
 </template>
-
 <script>
 import { reqUserAdd, reqUserOne, reqUserEdit } from "../../../util/request";
 import { mapGetters, mapActions } from "vuex";
@@ -67,27 +62,30 @@ export default {
     };
   },
   methods: {
-    // 关闭弹窗
+    // 关闭弹出
     hide() {
       this.info.isShow = false;
     },
     // 初始化
     empty() {
       this.form = {
-        roleid: 0,
+        roleid: '',
         username: "",
         password: "",
         status: 1,
       };
     },
-    // 添加数据到数据库
+    //添加数据到数据库
     add() {
       reqUserAdd(this.form).then((res) => {
+        // this.reqRoleList()
         this.hide();
+        console.log(this.form.roleid);
 
         this.requestUserCount();
+        // this.getCurrentPage(this.page+1);
         this.requestUserList();
-        this.empty();
+        this.empty()
       });
     },
     ...mapActions({
@@ -101,25 +99,26 @@ export default {
       reqUserOne({ uid: id }).then((res) => {
         this.form = res.data.list;
         this.form.id = id;
-        this.form.password = "";
+        this.form.password = ''
       });
     },
+    // 数据更改
     updata(form) {
       reqUserEdit(this.form).then((res) => {
         this.hide();
         this.requestUserList();
-        this.empty();
+        this.empty()
       });
     },
-    mounted() {
-      this.requestUserList();
-      this.requestUserCount();
-      this.requestUserList();
-      this.getCurrentPage(this.page + 1);
-    },
+  },
+  mounted() {
+    this.requestUserList();
+    this.requestUserCount();
+    this.requestUserList();
+    this.getCurrentPage(this.page);
+    
   },
 };
 </script>
-
-<style>
+<style scoped>
 </style>

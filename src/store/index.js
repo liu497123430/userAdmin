@@ -9,7 +9,7 @@ import manger from './modules/manger'
 import classify from './modules/classify'
 import spec from './modules/spec'
 import goods from './modules/goods'
-// import user from './modules/user'
+import user from './modules/user'
 export default new Vuex.Store({
         modules:{
             menu,
@@ -18,6 +18,6 @@ export default new Vuex.Store({
             classify,
             spec,
             goods,
-            // user
+            user
         }
 })
